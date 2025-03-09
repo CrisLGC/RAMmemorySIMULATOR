@@ -147,7 +147,7 @@ class Ui_Form(object):
         self.label_3.setText(_translate("Form", "Tamaño"))
         self.pushButton_2.setText(_translate("Form", "Asignar"))
         self.pushButton_3.setText(_translate("Form", "Ingresar"))
-        self.pushButton.setText(_translate("Form", "Designar"))
+        self.pushButton.setText(_translate("Form", "Desasignar"))
         self.label_4.setText(_translate("Form", "Particiones"))
         item = self.tableWidget_3.horizontalHeaderItem(0)
         item.setText(_translate("Form", "Posicion"))
