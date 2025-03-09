@@ -47,6 +47,15 @@ class simulador_ventana(QMainWindow):
                 item = QTableWidgetItem(str(valor))
                 self.ui.tableWidget.setItem(fila, columna, item)
 
+        self.tabla_particiones()
+        globalvar.lista_ingreso.clear()
+        print(globalvar.lista_ingreso)
+        self.ui.tableWidget_2.clearContents()
+        self.ui.tableWidget_2.setRowCount(0)
+        self.ui.tableWidget_2.setColumnCount(0)
+
+
+
     def ingresar_tareas(self):
 
         self.tarea = str(self.ui.lineEdit.text())
@@ -65,13 +74,25 @@ class simulador_ventana(QMainWindow):
             for columna, valor in enumerate(registro):
                 item = QTableWidgetItem(str(valor))
                 self.ui.tableWidget_2.setItem(fila, columna, item)
+        
+
 
     def designar_tarea(self):
-        self.designar_tarea = int(self.ui.lineEdit.text())
-        for i in range (len(globalvar.lista_ingreso)):
-            if self.designar_tarea == globalvar.lista_tarea[i][0]:
-                print(".")
-                globalvar.lista_ingreso.pop(i)
-                globalvar.lista_tarea.clear
-                self.tareas_posicion()
+        self.tarea = str(self.ui.lineEdit.text())
+        for i in range (len(globalvar.lista_tarea)):
+            if self.tarea == globalvar.lista_tarea[i][1]:
+                globalvar.lista_particiones[i][2] = True
+                globalvar.lista_tarea.pop(i)
+                print(globalvar.lista_tarea)
                 break
+        
+        self.ui.tableWidget.setRowCount(len(globalvar.lista_tarea))
+        self.ui.tableWidget.setColumnCount(len(globalvar.lista_tarea[0]))
+        for fila, registro in enumerate(globalvar.lista_tarea):
+            for columna, valor in enumerate(registro):
+                item = QTableWidgetItem(str(valor))
+                self.ui.tableWidget.setItem(fila, columna, item)
+       
+        self.tabla_particiones()
+
+       
