@@ -30,7 +30,7 @@ class simulador_ventana(QMainWindow):
     def tareas_posicion(self):
         for i in range(len(globalvar.lista_ingreso)):
             for j in range(len(globalvar.lista_particiones)):
-                if globalvar.lista_ingreso[i][2] <= globalvar.lista_particiones[j][1]:
+                if ((globalvar.lista_ingreso[i][2] - globalvar.lista_particiones[j][1]) >= -1000 and (globalvar.lista_ingreso[i][2] - globalvar.lista_particiones[j][1]) <= 0):
                     if globalvar.lista_particiones[j][2] == True:
                             globalvar.lista_tarea.append([globalvar.lista_particiones[j][0], globalvar.lista_ingreso[i][1]])
                             globalvar.lista_particiones[j][2] = False
@@ -52,7 +52,7 @@ class simulador_ventana(QMainWindow):
         print(globalvar.lista_ingreso)
         self.ui.tableWidget_2.clearContents()
         self.ui.tableWidget_2.setRowCount(0)
-        self.ui.tableWidget_2.setColumnCount(0)
+        
 
 
 
@@ -79,12 +79,15 @@ class simulador_ventana(QMainWindow):
 
     def designar_tarea(self):
         self.tarea = str(self.ui.lineEdit.text())
-        for i in range (len(globalvar.lista_tarea)):
+        for i in range(len(globalvar.lista_tarea)):
             if self.tarea == globalvar.lista_tarea[i][1]:
-                globalvar.lista_particiones[i][2] = True
-                globalvar.lista_tarea.pop(i)
-                print(globalvar.lista_tarea)
-                break
+                partition_index = next((index for index, partition in enumerate(globalvar.lista_particiones) if partition[0] == globalvar.lista_tarea[i][0]), None)
+                if partition_index is not None:
+                    globalvar.lista_particiones[partition_index][2] = True
+                    globalvar.lista_tarea.pop(i)
+                    print(globalvar.lista_tarea)
+                    self.tabla_particiones()
+                    break
         
         self.ui.tableWidget.setRowCount(len(globalvar.lista_tarea))
         self.ui.tableWidget.setColumnCount(len(globalvar.lista_tarea[0]))
@@ -93,6 +96,6 @@ class simulador_ventana(QMainWindow):
                 item = QTableWidgetItem(str(valor))
                 self.ui.tableWidget.setItem(fila, columna, item)
        
-        self.tabla_particiones()
+        
 
        
